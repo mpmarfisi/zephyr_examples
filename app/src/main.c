@@ -39,7 +39,7 @@ int main(void)
 			return 0;
 
 		ret = gpio_pin_configure_dt(leds[i], GPIO_OUTPUT_ACTIVE);
-		
+
 		if (ret < 0)
 			return 0;
 	}
@@ -56,5 +56,5 @@ int main(void)
 		counter = ++counter >= 4 ? 0 : counter;
 		k_msleep(SLEEP_TIME_MS);
 	}
-	return 0;
+return 0;
 }
