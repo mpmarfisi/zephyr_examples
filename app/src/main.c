@@ -9,7 +9,7 @@
 #include <zephyr/drivers/gpio.h>
 
 /* 1000 msec = 1 sec */
-#define SLEEP_TIME_MS   250
+#define SLEEP_TIME_MS   100
 
 /* DT alias for led0-3 */
 #define LED0_NODE DT_ALIAS(led0)
