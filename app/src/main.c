@@ -48,7 +48,7 @@ int main(void)
 
   while (1) {
     for(uint8_t i = 0; i < 4; i++){
-      gpio_pin_set_dt(leds[i], i == counter);
+      ret = gpio_pin_set_dt(leds[i], i == counter);
       if (ret < 0)
         return 0;
       printf("LED%d state: %s\n", counter + 1, led_state ? "ON" : "OFF");
