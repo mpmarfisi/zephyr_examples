@@ -1,0 +1,6 @@
+# Ignore build and zephyr related directories
+build/
+modules/
+zephyr/
+# Ignore app build
+app/build/
