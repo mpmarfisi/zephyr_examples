@@ -51,7 +51,7 @@ int main(void)
       ret = gpio_pin_set_dt(leds[i], i == counter);
       if (ret < 0)
         return 0;
-      printf("LED%d state: %s\n", counter + 1, led_state ? "ON" : "OFF");
+      printf("LED%d state: %s\n", counter + 1, i == counter ? "ON" : "OFF");
     }
     counter = ++counter >= 4 ? 0 : counter;
     k_msleep(SLEEP_TIME_MS);
