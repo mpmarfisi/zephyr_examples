@@ -1,6 +1,20 @@
-# Ignore build and zephyr related directories
-build/
-modules/
+# ── West workspace (generado por `west init`, no va al repo) ─────────────────
+.west/
+
+# ── Directorios descargados por west update ──────────────────────────────────
 zephyr/
-# Ignore app build
+modules/
+bootloader/
+tools/
+
+# ── Artefactos de build ───────────────────────────────────────────────────────
+build/
+apps/*/build/
+# build legacy (carpeta app/ antigua)
 app/build/
+
+# ── Editores / SO ─────────────────────────────────────────────────────────────
+.DS_Store
+*.swp
+*.swo
+*~
