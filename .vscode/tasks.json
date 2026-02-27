@@ -1,0 +1,48 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build blinky",
+            "type": "shell",
+            "command": "west build -b nrf5340dk/nrf5340/cpuapp ${workspaceFolder}/apps/blinky --build-dir ${workspaceFolder}/apps/blinky/build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            // Connect to J-Link RTT output over the GDB server telnet port.
+            // Run this task after starting the debug session (F5).
+            "label": "Watch RTT",
+            "type": "shell",
+            "command": "nc host.docker.internal 19021",
+            "isBackground": true,
+            "presentation": {
+                "label": "RTT Output",
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "problemMatcher": {
+                "pattern": { "regexp": "^$" },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^$",
+                    "endsPattern": "^$"
+                }
+            }
+        },
+        {
+            // Builds then opens the RTT terminal. Used as preLaunchTask in launch.json.
+            // Start scripts/start_gdb_server.ps1 on Windows manually before pressing F5.
+            "label": "Build & Watch RTT",
+            "dependsOn": ["Build blinky", "Watch RTT"],
+            "dependsOrder": "sequence"
+        }
+    ]
+}

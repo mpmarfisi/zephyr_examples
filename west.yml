@@ -1,0 +1,26 @@
+manifest:
+  remotes:
+    - name: zephyrproject-rtos
+      url-base: https://github.com/zephyrproject-rtos
+
+  projects:
+    - name: zephyr
+      remote: zephyrproject-rtos
+      revision: v4.3.0
+      import:
+        # By using name-allowlist we can clone only the modules that are
+        # strictly needed by the application.
+        name-allowlist:
+          - cmsis_6    # required by the ARM port for Cortex-M
+          - hal_nordic # required by the custom_plank board (Nordic based)
+          - segger
+    # - name: cmsis
+    #   revision: 4b96cbb174678dcd3ca86e11e1f24bc5f8726da0
+    #   path: modules/hal/cmsis
+    #   groups:
+    #     - hal
+    # - name: hal_nordic
+    #   revision: dce8519f7da37b0a745237679fd3f88250b495ff
+    #   path: modules/hal/nordic
+    #   groups:
+    #     - hal

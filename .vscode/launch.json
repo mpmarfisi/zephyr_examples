@@ -1,0 +1,45 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            // ── Flash + Debug (launch) ───────────────────────────────────────
+            // Builds, flashes via GDB load, resets and halts at main.
+            // Start GDB server on Windows first (same command as above).
+            "name": "Blinky – Flash & Debug",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "external",
+            "gdbTarget": "host.docker.internal:2331",
+            "svdFile": "${env:ZEPHYR_BASE}/dts/arm/nordic/nrf5340_application.svd",
+            "executable": "${workspaceFolder}/apps/blinky/build/zephyr/zephyr.elf",
+            "armToolchainPath": "/opt/toolchains/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin",
+            "toolchainPrefix": "arm-zephyr-eabi",
+            "gdbPath": "/opt/toolchains/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb",
+            "overrideLaunchCommands": [
+                "monitor reset",
+                "load",
+                "monitor exec SetRTTSearchRanges 0x20000000 0x40000",
+                "monitor reset",
+                "tbreak main",
+                "continue"
+            ],
+            "preLaunchTask": "Build blinky",
+            "showDevDebugOutput": "none",
+            // RTT output will appear in the "SEGGER RTT" channel of the
+            // Cortex-Debug "Output" panel (View → Output → RTT channel).
+            "rttConfig": {
+                "enabled": true,
+                "address": "auto",
+                "rttPort": 19021,
+                "rttHost": "host.docker.internal",
+                "decoders": [
+                    {
+                        "label": "RTT",
+                        "port": 0,
+                        "type": "console"
+                    }
+                ]
+            }
+        }
+    ]
+}
