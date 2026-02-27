@@ -1,0 +1,50 @@
+{
+    "name": "Zephyr Dev",
+    // El repo se monta dentro de /workspaces/ para que west pueda crear su
+    // workspace raíz en /workspaces/ y clonar zephyr como proyecto hermano.
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/zephyr_examples,type=bind,consistency=cached",
+    "workspaceFolder": "/workspaces/zephyr_examples",
+    "dockerFile": "Dockerfile",
+
+    // ── Extensiones ─────────────────────────────────────────────────────────
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-extension-pack",
+                "ms-vscode.cmake-tools",
+                "marus25.cortex-debug",
+                "ms-azuretools.vscode-docker",
+            ],
+            "settings": {
+                "C_Cpp.intelliSenseEngine": "default",
+                "cmake.configureOnOpen": false,
+                "cortex-debug.armToolchainPath": "/opt/toolchains/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin",
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "/bin/bash",
+                        "args": ["--login"]
+                    }
+                }
+            }
+        }
+    },
+
+    // ── Variables de entorno ─────────────────────────────────────────────────
+    // ZEPHYR_BASE apunta al proyecto zephyr descargado por west.
+    "remoteEnv": {
+        "ZEPHYR_BASE": "/workspaces/zephyr"
+    },
+
+    // --privileged para acceso a USB
+    "runArgs": [
+        "--privileged"
+    ],
+
+    // Cada vez que el contenedor arranca, da permisos de lectura/escritura a
+    // todos los nodos USB para que libjlinkarm pueda abrir la conexión.
+    // Las reglas udev del host gestionan permisos para el usuario host, pero no
+    // se propagan al usuario del contenedor; este comando lo compensa.
+    "postStartCommand": "sudo chmod a+rw /dev/bus/usb/*/* 2>/dev/null || true"
+}
